@@ -19,8 +19,13 @@ class WeatherService
         'Malang' => ['lat' => -7.9666, 'lon' => 112.6326],
         'Cirebon' => ['lat' => -6.7063, 'lon' => 108.5570],
         'Serang' => ['lat' => -6.1201, 'lon' => 106.1503],
+        'Cilegon' => ['lat' => -6.0025, 'lon' => 106.0112],
         'Bogor' => ['lat' => -6.5944, 'lon' => 106.7892],
         'Sukabumi' => ['lat' => -6.9175, 'lon' => 106.9270],
+        'Bekasi' => ['lat' => -6.2349, 'lon' => 106.9896],
+        'Depok' => ['lat' => -6.4025, 'lon' => 106.7942],
+        'Tangerang' => ['lat' => -6.1783, 'lon' => 106.6319],
+        'Tasikmalaya' => ['lat' => -7.3274, 'lon' => 108.2207],
     ];
 
     public function getCities()
