@@ -70,7 +70,9 @@
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
             <i class="fas fa-thermometer-half text-red-500 mr-2"></i>Temperature by City (°C)
         </h3>
-        <canvas id="temperatureChart" height="300"></canvas>
+        <div class="h-80">
+            <canvas id="temperatureChart"></canvas>
+        </div>
     </div>
 
     <!-- Humidity Chart -->
@@ -78,7 +80,9 @@
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
             <i class="fas fa-tint text-blue-500 mr-2"></i>Humidity by City (%)
         </h3>
-        <canvas id="humidityChart" height="300"></canvas>
+        <div class="h-80">
+            <canvas id="humidityChart"></canvas>
+        </div>
     </div>
 </div>
 
@@ -133,22 +137,27 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const cityLabels = {!! json_encode(array_keys($stats['temperatures'])) !!};
+    const temperatures = {!! json_encode(array_values($stats['temperatures'])) !!}.map(Number);
+    const humidities = {!! json_encode(array_values($stats['humidities'])) !!}.map(Number);
+
     // Temperature Chart
     const tempCtx = document.getElementById('temperatureChart').getContext('2d');
     new Chart(tempCtx, {
         type: 'bar',
         data: {
-            labels: {!! json_encode(array_keys($stats['temperatures'])) !!},
+            labels: cityLabels,
             datasets: [{
                 label: 'Temperature (°C)',
-                data: {!! json_encode(array_values($stats['temperatures'])) !!},
-                backgroundColor: {!! json_encode(array_values($stats['temperatures'])) !!}.map(temp => {
+                data: temperatures,
+                backgroundColor: temperatures.map(temp => {
                     if (temp >= 32) return 'rgba(239, 68, 68, 0.8)';
                     if (temp >= 28) return 'rgba(249, 115, 22, 0.8)';
                     if (temp >= 24) return 'rgba(234, 179, 8, 0.8)';
                     return 'rgba(34, 197, 94, 0.8)';
                 }),
-                borderRadius: 8
+                borderRadius: 8,
+                borderWidth: 1
             }]
         },
         options: {
@@ -159,9 +168,8 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             scales: {
                 y: {
-                    beginAtZero: false,
-                    min: 20,
-                    max: 40
+                    beginAtZero: true,
+                    suggestedMax: Math.max(...temperatures, 35) + 2
                 }
             }
         }
@@ -172,9 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
     new Chart(humidityCtx, {
         type: 'doughnut',
         data: {
-            labels: {!! json_encode(array_keys($stats['humidities'])) !!},
+            labels: cityLabels,
             datasets: [{
-                data: {!! json_encode(array_values($stats['humidities'])) !!},
+                data: humidities,
                 backgroundColor: [
                     'rgba(59, 130, 246, 0.8)',
                     'rgba(16, 185, 129, 0.8)',
@@ -186,12 +194,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     'rgba(99, 102, 241, 0.8)',
                     'rgba(168, 162, 158, 0.8)',
                     'rgba(34, 197, 94, 0.8)'
-                ]
+                ],
+                borderWidth: 1
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            cutout: '58%',
             plugins: {
                 legend: {
                     position: 'right',
