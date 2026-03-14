@@ -8,6 +8,42 @@
     <p class="text-gray-600">Visualisasi data penjualan real-time</p>
 </div>
 
+<!-- Filters -->
+<div class="bg-white rounded-lg shadow p-4 mb-6">
+    <form method="GET" action="{{ route('dashboard') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+        <div>
+            <label for="period" class="block text-sm font-medium text-gray-700 mb-1">Periode Data</label>
+            <select id="period" name="period" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="30" {{ (int) $selectedPeriod === 30 ? 'selected' : '' }}>30 hari terakhir</option>
+                <option value="90" {{ (int) $selectedPeriod === 90 ? 'selected' : '' }}>90 hari terakhir</option>
+                <option value="180" {{ (int) $selectedPeriod === 180 ? 'selected' : '' }}>180 hari terakhir</option>
+                <option value="365" {{ (int) $selectedPeriod === 365 ? 'selected' : '' }}>365 hari terakhir</option>
+                <option value="0" {{ (int) $selectedPeriod === 0 ? 'selected' : '' }}>Semua data</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Order</label>
+            <select id="status" name="status" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="all" {{ $selectedStatus === 'all' ? 'selected' : '' }}>Semua status</option>
+                <option value="pending" {{ $selectedStatus === 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="processing" {{ $selectedStatus === 'processing' ? 'selected' : '' }}>Processing</option>
+                <option value="completed" {{ $selectedStatus === 'completed' ? 'selected' : '' }}>Completed</option>
+                <option value="cancelled" {{ $selectedStatus === 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+            </select>
+        </div>
+
+        <div class="flex gap-2">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <i class="fas fa-filter mr-2"></i>Terapkan
+            </button>
+            <a href="{{ route('dashboard') }}" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                Reset
+            </a>
+        </div>
+    </form>
+</div>
+
 <!-- Summary Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
     <div class="bg-white rounded-lg shadow p-6">
@@ -17,7 +53,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-gray-500 text-sm">Total Revenue</p>
-                <p class="text-2xl font-bold text-gray-800">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+                <p class="text-xl lg:text-2xl font-bold text-gray-800 leading-tight break-words max-w-[170px]">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
             </div>
         </div>
     </div>
@@ -61,7 +97,7 @@
     <!-- Monthly Sales Chart -->
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            <i class="fas fa-chart-line text-blue-500 mr-2"></i>Penjualan Bulanan (12 Bulan Terakhir)
+            <i class="fas fa-chart-line text-blue-500 mr-2"></i>Penjualan Bulanan
         </h3>
         <canvas id="monthlySalesChart" height="200"></canvas>
     </div>
@@ -99,7 +135,7 @@
     <!-- Daily Sales (30 days) -->
     <div class="bg-white rounded-lg shadow p-6 lg:col-span-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            <i class="fas fa-calendar-alt text-indigo-500 mr-2"></i>Penjualan Harian (30 Hari Terakhir)
+            <i class="fas fa-calendar-alt text-indigo-500 mr-2"></i>Penjualan Harian
         </h3>
         <canvas id="dailySalesChart" height="150"></canvas>
     </div>
