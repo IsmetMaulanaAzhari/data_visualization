@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Sales Dashboard')</title>
+    <title>@yield('title', 'Data Visualization Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -38,10 +38,7 @@
             <!-- Data Source Toggle -->
             <div class="px-4 mb-4">
                 <p class="text-gray-400 text-xs uppercase mb-2">Data Source</p>
-                <div class="grid grid-cols-3 gap-1 bg-slate-700 rounded-lg p-1">
-                    <a href="{{ route('dashboard') }}" class="text-center py-1 px-2 text-[11px] rounded {{ request()->routeIs('dashboard') || request()->routeIs('categories.*') || request()->routeIs('products.*') || request()->routeIs('customers.*') || request()->routeIs('orders.*') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:text-white' }}">
-                        Database
-                    </a>
+                <div class="grid grid-cols-2 gap-1 bg-slate-700 rounded-lg p-1">
                     <a href="{{ route('weather.dashboard') }}" class="text-center py-1 px-2 text-[11px] rounded {{ request()->routeIs('weather.*') ? 'bg-blue-500 text-white' : 'text-gray-300 hover:text-white' }}">
                         Weather API
                     </a>
@@ -76,26 +73,13 @@
                         <span>Dashboard</span>
                     </a>
                 @else
-                    <!-- Database Navigation -->
-                    <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('dashboard') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
-                        <i class="fas fa-home w-6"></i>
-                        <span>Dashboard</span>
+                    <a href="{{ route('weather.dashboard') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('weather.dashboard') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
+                        <i class="fas fa-cloud-sun w-6"></i>
+                        <span>Weather Dashboard</span>
                     </a>
-                    <a href="{{ route('categories.index') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('categories.*') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
-                        <i class="fas fa-tags w-6"></i>
-                        <span>Categories</span>
-                    </a>
-                    <a href="{{ route('products.index') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('products.*') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
-                        <i class="fas fa-box w-6"></i>
-                        <span>Products</span>
-                    </a>
-                    <a href="{{ route('customers.index') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('customers.*') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
-                        <i class="fas fa-users w-6"></i>
-                        <span>Customers</span>
-                    </a>
-                    <a href="{{ route('orders.index') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('orders.*') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
-                        <i class="fas fa-shopping-cart w-6"></i>
-                        <span>Orders</span>
+                    <a href="{{ route('student-productivity.dashboard') }}" class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700 hover:text-white {{ request()->routeIs('student-productivity.dashboard') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
+                        <i class="fas fa-file-csv w-6"></i>
+                        <span>Student Dataset</span>
                     </a>
                 @endif
             </nav>
@@ -146,8 +130,8 @@
                             <i class="fas fa-file-csv mr-1"></i> Student Dataset Mode
                         </span>
                     @else
-                        <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full">
-                            <i class="fas fa-database mr-1"></i> Database Mode
+                        <span class="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
+                            <i class="fas fa-layer-group mr-1"></i> Data Source Mode
                         </span>
                     @endif
                 </div>
@@ -213,8 +197,8 @@
         // Handle responsive
         function handleResize() {
             if (window.innerWidth < 1024) {
-                sidebar.classList.add('sidebar-collapsed');
-                mainContent.classList.add('main-expanded');
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
             }
         }
 
