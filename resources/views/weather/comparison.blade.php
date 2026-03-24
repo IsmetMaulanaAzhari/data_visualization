@@ -3,84 +3,84 @@
 @section('title', 'Compare Cities Weather')
 
 @section('content')
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">
-        <i class="fas fa-balance-scale text-blue-500 mr-3"></i>Compare Cities Weather
+<div class="mb-8">
+    <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600 bg-clip-text text-transparent mb-2">
+        Perbandingan Cuaca Kota
     </h1>
-    <p class="text-gray-600">Side-by-side weather comparison</p>
+    <p class="text-gray-600 text-lg">Lihat perbandingan cuaca antar kota secara berdampingan</p>
 </div>
 
 <!-- City Selector -->
-<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+<div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mb-6">
     <form method="GET" action="{{ route('weather.comparison') }}" id="compareForm">
-        <label class="font-semibold text-gray-700 block mb-3">
-            <i class="fas fa-check-square mr-2"></i>Select Cities to Compare (2-5 cities):
+        <label class="font-semibold text-gray-700 block mb-4 text-lg">
+            🔍 Pilih Kota untuk Dibandingkan (2-5 kota):
         </label>
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
             @foreach($allCities as $city)
-            <label class="flex items-center space-x-2 cursor-pointer">
+            <label class="flex items-center space-x-3 cursor-pointer p-3 rounded-lg hover:bg-blue-50 transition">
                 <input type="checkbox" name="cities[]" value="{{ $city }}" 
                     {{ in_array($city, $selectedCities) ? 'checked' : '' }}
-                    class="rounded text-blue-500 focus:ring-blue-500">
-                <span class="text-gray-700">{{ $city }}</span>
+                    class="w-5 h-5 rounded text-blue-500 focus:ring-blue-500 focus:ring-2">
+                <span class="text-gray-700 font-medium">{{ $city }}</span>
             </label>
             @endforeach
         </div>
-        <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-            <i class="fas fa-sync-alt mr-2"></i>Compare
+        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium">
+            🔄 Bandingkan
         </button>
     </form>
 </div>
 
 <!-- Comparison Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(count($selectedCities), 5) }} gap-4 mb-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ min(count($selectedCities), 5) }} gap-5 mb-6">
     @foreach($comparisonData as $city => $data)
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white text-center">
-            <h3 class="text-xl font-bold">{{ $city }}</h3>
+    <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white overflow-hidden card-hover">
+        <div class="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 p-5 text-white text-center">
+            <h3 class="text-2xl font-bold">📍 {{ $city }}</h3>
         </div>
         
         @if($data['success'] && $data['current'])
         <div class="p-6 text-center">
             @php
                 $code = $data['current']['weather_code'];
-                $icon = match(true) {
-                    $code == 0 => 'fa-sun text-yellow-500',
-                    $code <= 3 => 'fa-cloud-sun text-gray-500',
-                    $code <= 48 => 'fa-smog text-gray-400',
-                    $code <= 65 => 'fa-cloud-rain text-blue-500',
-                    $code <= 77 => 'fa-snowflake text-blue-300',
-                    $code <= 82 => 'fa-cloud-showers-heavy text-blue-600',
-                    default => 'fa-bolt text-yellow-600',
+                $emoji = match(true) {
+                    $code == 0 => '☀️',
+                    $code <= 3 => '⛅',
+                    $code <= 48 => '🌫️',
+                    $code <= 65 => '🌧️',
+                    $code <= 77 => '❄️',
+                    $code <= 82 => '⛈️',
+                    default => '⚡',
                 };
             @endphp
-            <i class="fas {{ $icon }} text-5xl mb-3"></i>
-            <p class="text-4xl font-bold text-gray-800">{{ round($data['current']['temperature']) }}°C</p>
-            <p class="text-gray-500 mb-4">{{ $data['current']['weather_description'] }}</p>
+            <span class="text-6xl mb-4 block">{{ $emoji }}</span>
+            <p class="text-5xl font-bold text-gray-800">{{ round($data['current']['temperature']) }}°C</p>
+            <p class="text-gray-600 mb-6 capitalize">{{ $data['current']['weather_description'] }}</p>
             
-            <div class="space-y-2 text-sm">
-                <div class="flex justify-between bg-gray-50 p-2 rounded">
-                    <span class="text-gray-500">Feels Like</span>
-                    <span class="font-semibold">{{ round($data['current']['apparent_temperature']) }}°C</span>
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    <span class="text-gray-700">Terasa Seperti</span>
+                    <span class="font-semibold text-blue-700">{{ round($data['current']['apparent_temperature']) }}°C</span>
                 </div>
-                <div class="flex justify-between bg-gray-50 p-2 rounded">
-                    <span class="text-gray-500">Humidity</span>
-                    <span class="font-semibold">{{ $data['current']['humidity'] }}%</span>
+                <div class="flex justify-between bg-cyan-50 p-3 rounded-lg border border-cyan-100">
+                    <span class="text-gray-700">Kelembaban</span>
+                    <span class="font-semibold text-cyan-700">{{ $data['current']['humidity'] }}%</span>
                 </div>
-                <div class="flex justify-between bg-gray-50 p-2 rounded">
-                    <span class="text-gray-500">Wind</span>
-                    <span class="font-semibold">{{ round($data['current']['wind_speed']) }} km/h</span>
+                <div class="flex justify-between bg-teal-50 p-3 rounded-lg border border-teal-100">
+                    <span class="text-gray-700">Kecepatan Angin</span>
+                    <span class="font-semibold text-teal-700">{{ round($data['current']['wind_speed']) }} km/h</span>
                 </div>
-                <div class="flex justify-between bg-gray-50 p-2 rounded">
-                    <span class="text-gray-500">Precipitation</span>
-                    <span class="font-semibold">{{ $data['current']['precipitation'] }} mm</span>
+                <div class="flex justify-between bg-purple-50 p-3 rounded-lg border border-purple-100">
+                    <span class="text-gray-700">Presipitasi</span>
+                    <span class="font-semibold text-purple-700">{{ $data['current']['precipitation'] }} mm</span>
                 </div>
             </div>
         </div>
         @else
-        <div class="p-6 text-center text-red-500">
-            <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
-            <p>Data unavailable</p>
+        <div class="p-6 text-center text-red-600">
+            <p class="text-2xl mb-2">⚠️</p>
+            <p class="font-medium">Data tidak tersedia</p>
         </div>
         @endif
     </div>
@@ -90,34 +90,34 @@
 <!-- Comparison Charts -->
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <!-- Temperature Comparison -->
-    <div class="bg-white rounded-xl shadow-lg p-6">
+    <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            <i class="fas fa-thermometer-half text-red-500 mr-2"></i>Temperature Comparison
+            🌡️ Perbandingan Suhu
         </h3>
         <canvas id="tempCompareChart" height="200"></canvas>
     </div>
 
     <!-- Humidity Comparison -->
-    <div class="bg-white rounded-xl shadow-lg p-6">
+    <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            <i class="fas fa-tint text-blue-500 mr-2"></i>Humidity Comparison
+            💧 Perbandingan Kelembaban
         </h3>
         <canvas id="humidityCompareChart" height="200"></canvas>
     </div>
 </div>
 
 <!-- Forecast Comparison Table -->
-<div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+<div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mt-8 card-hover">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">
-        <i class="fas fa-table text-green-500 mr-2"></i>3-Day Forecast Comparison
+        📅 Perbandingan Prakiraan 3 Hari
     </h3>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
             <thead>
-                <tr class="bg-gray-100">
-                    <th class="p-3 text-left">Day</th>
+                <tr class="bg-blue-50 border-b-2 border-blue-200">
+                    <th class="p-3 text-left font-semibold text-gray-700">Hari</th>
                     @foreach($selectedCities as $city)
-                    <th class="p-3 text-center">{{ $city }}</th>
+                    <th class="p-3 text-center font-semibold text-gray-700">{{ $city }}</th>
                     @endforeach
                 </tr>
             </thead>

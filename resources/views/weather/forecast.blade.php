@@ -3,20 +3,20 @@
 @section('title', '7-Day Forecast - ' . $selectedCity)
 
 @section('content')
-<div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">
-        <i class="fas fa-calendar-week text-blue-500 mr-3"></i>7-Day Weather Forecast
+<div class="mb-8">
+    <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-600 bg-clip-text text-transparent mb-2">
+        Prakiraan Cuaca 7 Hari
     </h1>
-    <p class="text-gray-600">Weekly weather prediction for {{ $selectedCity }}</p>
+    <p class="text-gray-600 text-lg">Prediksi cuaca mingguan untuk {{ $selectedCity }}</p>
 </div>
 
 <!-- City Selector -->
-<div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+<div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mb-6">
     <form method="GET" action="{{ route('weather.forecast') }}" class="flex items-center gap-4">
         <label class="font-semibold text-gray-700">
-            <i class="fas fa-map-marker-alt mr-2"></i>Select City:
+            📍 Pilih Kota:
         </label>
-        <select name="city" onchange="this.form.submit()" class="flex-1 max-w-xs border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <select name="city" onchange="this.form.submit()" class="flex-1 max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             @foreach($cities as $city)
             <option value="{{ $city }}" {{ $selectedCity == $city ? 'selected' : '' }}>{{ $city }}</option>
             @endforeach
@@ -26,78 +26,78 @@
 
 @if($weatherData['success'])
 <!-- Current Weather Header -->
-<div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl shadow-lg p-8 text-white mb-6">
+<div class="bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-600 rounded-xl shadow-md p-8 text-white mb-8 card-hover">
     <div class="flex items-center justify-between">
         <div>
-            <h2 class="text-2xl font-bold mb-2">{{ $selectedCity }}</h2>
+            <h2 class="text-3xl font-bold mb-3">{{ $selectedCity }}</h2>
             @if($weatherData['current'])
-            <p class="text-6xl font-bold">{{ round($weatherData['current']['temperature']) }}°C</p>
-            <p class="text-xl mt-2 text-blue-100">{{ $weatherData['current']['weather_description'] }}</p>
+            <p class="text-7xl font-bold">{{ round($weatherData['current']['temperature']) }}°C</p>
+            <p class="text-xl mt-3 text-blue-100 capitalize">{{ $weatherData['current']['weather_description'] }}</p>
             @endif
         </div>
         <div class="text-right">
             @php
                 $code = $weatherData['current']['weather_code'] ?? 0;
-                $icon = match(true) {
-                    $code == 0 => 'fa-sun',
-                    $code <= 3 => 'fa-cloud-sun',
-                    $code <= 48 => 'fa-smog',
-                    $code <= 65 => 'fa-cloud-rain',
-                    $code <= 77 => 'fa-snowflake',
-                    $code <= 82 => 'fa-cloud-showers-heavy',
-                    default => 'fa-bolt',
+                $emoji = match(true) {
+                    $code == 0 => '☀️',
+                    $code <= 3 => '⛅',
+                    $code <= 48 => '🌫️',
+                    $code <= 65 => '🌧️',
+                    $code <= 77 => '❄️',
+                    $code <= 82 => '⛈️',
+                    default => '⚡',
                 };
             @endphp
-            <i class="fas {{ $icon }} text-8xl opacity-80"></i>
+            <span class="text-8xl opacity-90">{{ $emoji }}</span>
         </div>
     </div>
 </div>
 
 <!-- 7-Day Forecast -->
-<div class="bg-white rounded-xl shadow-lg p-6">
-    <h3 class="text-xl font-semibold text-gray-800 mb-6">
-        <i class="fas fa-calendar-alt mr-2 text-blue-500"></i>7-Day Forecast
+<div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6">
+    <h3 class="text-2xl font-semibold text-gray-800 mb-6">
+        📅 Prakiraan 7 Hari Ke Depan
     </h3>
     
-    <div class="space-y-4">
+    <div class="space-y-3">
         @foreach($weatherData['daily'] as $index => $day)
-        <div class="flex items-center justify-between p-4 {{ $index == 0 ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-gray-50' }} rounded-lg hover:bg-gray-100 transition">
-            <div class="flex items-center w-1/3">
-                <div class="w-24">
+        <div class="flex items-center justify-between p-5 {{ $index == 0 ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-gray-50 hover:bg-gray-100' }} rounded-lg transition-colors">
+            <div class="flex items-center w-1/4">
+                <div class="w-28">
                     <p class="font-semibold text-gray-800">{{ $day['day_name'] }}</p>
-                    <p class="text-sm text-gray-500">{{ date('M d', strtotime($day['date'])) }}</p>
+                    <p class="text-sm text-gray-500">{{ date('d M', strtotime($day['date'])) }}</p>
                 </div>
             </div>
             
-            <div class="flex items-center justify-center w-1/3">
+            <div class="flex items-center justify-center flex-1 gap-3">
                 @php
                     $dayCode = $day['weather_code'];
-                    $dayIcon = match(true) {
-                        $dayCode == 0 => 'fa-sun text-yellow-500',
-                        $dayCode <= 3 => 'fa-cloud-sun text-gray-500',
-                        $dayCode <= 48 => 'fa-smog text-gray-400',
-                        $dayCode <= 65 => 'fa-cloud-rain text-blue-500',
-                        $dayCode <= 77 => 'fa-snowflake text-blue-300',
-                        $dayCode <= 82 => 'fa-cloud-showers-heavy text-blue-600',
-                        default => 'fa-bolt text-yellow-600',
+                    $dayEmoji = match(true) {
+                        $dayCode == 0 => '☀️',
+                        $dayCode <= 3 => '⛅',
+                        $dayCode <= 48 => '🌫️',
+                        $dayCode <= 65 => '🌧️',
+                        $dayCode <= 77 => '❄️',
+                        $dayCode <= 82 => '⛈️',
+                        default => '⚡',
                     };
                 @endphp
-                <i class="fas {{ $dayIcon }} text-3xl mr-4"></i>
-                <span class="text-gray-600">{{ $day['weather_description'] }}</span>
+                <span class="text-3xl">{{ $dayEmoji }}</span>
+                <span class="text-gray-700 capitalize">{{ $day['weather_description'] }}</span>
             </div>
             
-            <div class="flex items-center justify-end w-1/3 gap-6">
+            <div class="flex items-center justify-end w-1/4 gap-6">
                 <div class="text-center">
-                    <p class="text-xs text-gray-500">High</p>
-                    <p class="text-xl font-bold text-red-500">{{ round($day['temp_max']) }}°</p>
+                    <p class="text-xs text-gray-600 font-medium">Tertinggi</p>
+                    <p class="text-2xl font-bold text-red-600">{{ round($day['temp_max']) }}°</p>
                 </div>
                 <div class="text-center">
-                    <p class="text-xs text-gray-500">Low</p>
-                    <p class="text-xl font-bold text-blue-500">{{ round($day['temp_min']) }}°</p>
+                    <p class="text-xs text-gray-600 font-medium">Terendah</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ round($day['temp_min']) }}°</p>
                 </div>
                 <div class="text-center">
-                    <p class="text-xs text-gray-500"><i class="fas fa-tint"></i></p>
-                    <p class="text-sm text-gray-600">{{ $day['precipitation'] }} mm</p>
+                    <p class="text-xs text-gray-600 font-medium">Hujan</p>
+                    <p class="text-sm text-gray-700 font-medium">{{ $day['precipitation'] }} mm</p>
                 </div>
             </div>
         </div>
