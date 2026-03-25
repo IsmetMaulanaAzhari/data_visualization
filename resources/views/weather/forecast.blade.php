@@ -14,7 +14,7 @@
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mb-6">
     <form method="GET" action="{{ route('weather.forecast') }}" class="flex items-center gap-4">
         <label class="font-semibold text-gray-700">
-            📍 Pilih Kota:
+            <i class="fas fa-location-dot mr-2"></i>Pilih Kota:
         </label>
         <select name="city" onchange="this.form.submit()" class="flex-1 max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             @foreach($cities as $city)
@@ -56,20 +56,20 @@
 <!-- 7-Day Forecast -->
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6">
     <h3 class="text-2xl font-semibold text-gray-800 mb-6">
-        📅 Prakiraan 7 Hari Ke Depan
+        <i class="fas fa-calendar-days mr-2 text-blue-600"></i>Prakiraan 7 Hari Ke Depan
     </h3>
     
     <div class="space-y-3">
         @foreach($weatherData['daily'] as $index => $day)
-        <div class="flex items-center justify-between p-5 {{ $index == 0 ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-gray-50 hover:bg-gray-100' }} rounded-lg transition-colors">
-            <div class="flex items-center w-1/4">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between p-5 {{ $index == 0 ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-gray-50 hover:bg-gray-100' }} rounded-lg transition-colors">
+            <div class="flex items-center md:w-1/4">
                 <div class="w-28">
                     <p class="font-semibold text-gray-800">{{ $day['day_name'] }}</p>
                     <p class="text-sm text-gray-500">{{ date('d M', strtotime($day['date'])) }}</p>
                 </div>
             </div>
             
-            <div class="flex items-center justify-center flex-1 gap-3">
+            <div class="flex items-center md:justify-center flex-1 gap-3">
                 @php
                     $dayCode = $day['weather_code'];
                     $dayEmoji = match(true) {
@@ -86,7 +86,7 @@
                 <span class="text-gray-700 capitalize">{{ $day['weather_description'] }}</span>
             </div>
             
-            <div class="flex items-center justify-end w-1/4 gap-6">
+            <div class="flex items-center md:justify-end md:w-1/4 gap-6">
                 <div class="text-center">
                     <p class="text-xs text-gray-600 font-medium">Tertinggi</p>
                     <p class="text-2xl font-bold text-red-600">{{ round($day['temp_max']) }}°</p>

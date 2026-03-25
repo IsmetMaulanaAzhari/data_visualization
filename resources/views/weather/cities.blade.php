@@ -15,7 +15,7 @@
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white overflow-hidden hover:shadow-lg transition-all duration-300 card-hover">
         <div class="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 p-5 text-white">
             <h3 class="text-2xl font-bold">
-                📍 {{ $city }}
+                <i class="fas fa-location-dot mr-2"></i>{{ $city }}
             </h3>
             <p class="text-sm text-blue-100 mt-1">
                 Lat: {{ $cities[$city]['lat'] }}, Lon: {{ $cities[$city]['lon'] }}
@@ -68,7 +68,7 @@
             <!-- Mini 3-Day Forecast -->
             @if(count($data['daily']) >= 3)
             <div class="mt-5 pt-5 border-t border-gray-200">
-                <p class="text-xs text-gray-600 font-semibold mb-4">📅 Prakiraan 3 Hari ke Depan</p>
+                <p class="text-xs text-gray-600 font-semibold mb-4">Prakiraan 3 Hari ke Depan</p>
                 <div class="flex justify-between gap-2">
                     @for($i = 1; $i < 4 && $i < count($data['daily']); $i++)
                     <div class="flex-1 text-center bg-gray-50 rounded-lg p-3">
@@ -95,7 +95,7 @@
         </div>
         @else
         <div class="p-6 text-center text-red-600">
-            <p class="text-2xl mb-2">⚠️</p>
+            <p class="text-2xl mb-2"><i class="fas fa-triangle-exclamation"></i></p>
             <p class="font-medium">Data cuaca tidak tersedia</p>
         </div>
         @endif
@@ -105,7 +105,7 @@
 
 <div class="mt-8 text-center">
     <a href="{{ route('weather.refresh') }}" class="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium">
-        🔄 Perbarui Semua Data
+        <i class="fas fa-rotate-right mr-2"></i>Perbarui Semua Data
     </a>
 </div>
 @endsection

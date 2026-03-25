@@ -79,26 +79,10 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
         }
-        /* Stat cards with gradient background */
+        /* Stat cards with subtle background */
         .stat-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
             border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 193, 7, 0.1) 0%, transparent 70%);
-            animation: float-slow 6s ease-in-out infinite;
-        }
-        @keyframes float-slow {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(20px, 20px); }
         }
     </style>
 </head>
@@ -108,7 +92,7 @@
         <aside id="sidebar" class="sidebar w-64 min-h-screen fixed z-20">
             <div class="p-6 flex justify-between items-center border-b border-white/10">
                 <h1 class="text-white text-2xl font-bold bg-gradient-to-r from-amber-300 via-orange-300 to-rose-300 bg-clip-text text-transparent">
-                    Vizualize
+                    Visualize
                 </h1>
                 <button id="closeSidebar" class="text-gray-400 hover:text-white transition-colors">
                     <i class="fas fa-times text-lg"></i>
@@ -120,10 +104,10 @@
                 <p class="text-gray-400 text-xs font-semibold uppercase tracking-wide mb-3">Pilih Data</p>
                 <div class="grid grid-cols-2 gap-2">
                     <a href="{{ route('weather.dashboard') }}" class="py-2 px-3 text-center text-xs font-medium rounded-lg transition-all {{ request()->routeIs('weather.*') ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/30' : 'bg-white/10 text-gray-300 hover:bg-white/20' }}">
-                        🌤️ Cuaca
+                        Cuaca
                     </a>
                     <a href="{{ route('student-productivity.dashboard') }}" class="py-2 px-3 text-center text-xs font-medium rounded-lg transition-all {{ request()->routeIs('student-productivity.*') ? 'bg-gradient-to-r from-violet-500 to-purple-500 text-white shadow-lg shadow-purple-500/30' : 'bg-white/10 text-gray-300 hover:bg-white/20' }}">
-                        📊 Produktivitas
+                        Produktivitas
                     </a>
                 </div>
             </div>
@@ -186,22 +170,22 @@
         <main id="mainContent" class="main-content flex-1 ml-64 p-8 min-h-screen">
             <!-- Top Bar with Toggle -->
             <div class="flex items-center justify-between mb-8">
-                <button id="toggleSidebar" class="bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-lg transition-colors backdrop-blur-sm border border-white/10">
+                <button id="toggleSidebar" class="bg-white text-slate-700 hover:bg-slate-100 p-2.5 rounded-lg transition-colors border border-slate-200 shadow-sm">
                     <i class="fas fa-bars text-lg"></i>
                 </button>
                 
                 <div class="flex items-center space-x-3">
                     @if(request()->routeIs('weather.*'))
                         <span class="text-sm font-medium bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700 px-4 py-2 rounded-full">
-                            🌤️ Mode Cuaca
+                            Mode Cuaca
                         </span>
                     @elseif(request()->routeIs('student-productivity.*'))
                         <span class="text-sm font-medium bg-gradient-to-r from-violet-100 to-purple-100 text-purple-700 px-4 py-2 rounded-full">
-                            📊 Mode Produktivitas
+                            Mode Produktivitas
                         </span>
                     @else
                         <span class="text-sm font-medium bg-gradient-to-r from-gray-100 to-slate-100 text-slate-700 px-4 py-2 rounded-full">
-                            📈 Data Mode
+                            Data Mode
                         </span>
                     @endif
                 </div>

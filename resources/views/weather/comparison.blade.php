@@ -14,7 +14,7 @@
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mb-6">
     <form method="GET" action="{{ route('weather.comparison') }}" id="compareForm">
         <label class="font-semibold text-gray-700 block mb-4 text-lg">
-            🔍 Pilih Kota untuk Dibandingkan (2-5 kota):
+            <i class="fas fa-list-check mr-2 text-blue-600"></i>Pilih Kota untuk Dibandingkan (2-5 kota):
         </label>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
             @foreach($allCities as $city)
@@ -27,7 +27,7 @@
             @endforeach
         </div>
         <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium">
-            🔄 Bandingkan
+            <i class="fas fa-rotate-right mr-2"></i>Bandingkan
         </button>
     </form>
 </div>
@@ -37,7 +37,7 @@
     @foreach($comparisonData as $city => $data)
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white overflow-hidden card-hover">
         <div class="bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500 p-5 text-white text-center">
-            <h3 class="text-2xl font-bold">📍 {{ $city }}</h3>
+            <h3 class="text-2xl font-bold"><i class="fas fa-location-dot mr-2"></i>{{ $city }}</h3>
         </div>
         
         @if($data['success'] && $data['current'])
@@ -79,7 +79,7 @@
         </div>
         @else
         <div class="p-6 text-center text-red-600">
-            <p class="text-2xl mb-2">⚠️</p>
+            <p class="text-2xl mb-2"><i class="fas fa-triangle-exclamation"></i></p>
             <p class="font-medium">Data tidak tersedia</p>
         </div>
         @endif
@@ -92,7 +92,7 @@
     <!-- Temperature Comparison -->
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            🌡️ Perbandingan Suhu
+            <i class="fas fa-temperature-half mr-2 text-red-500"></i>Perbandingan Suhu
         </h3>
         <canvas id="tempCompareChart" height="200"></canvas>
     </div>
@@ -100,7 +100,7 @@
     <!-- Humidity Comparison -->
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            💧 Perbandingan Kelembaban
+            <i class="fas fa-droplet mr-2 text-cyan-500"></i>Perbandingan Kelembaban
         </h3>
         <canvas id="humidityCompareChart" height="200"></canvas>
     </div>
@@ -109,7 +109,7 @@
 <!-- Forecast Comparison Table -->
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mt-8 card-hover">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">
-        📅 Perbandingan Prakiraan 3 Hari
+        <i class="fas fa-calendar-days mr-2 text-blue-600"></i>Perbandingan Prakiraan 3 Hari
     </h3>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">

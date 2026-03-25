@@ -20,7 +20,7 @@
     </h1>
     <p class="text-gray-600 text-lg">Eksplorasi mendalam tentang pola belajar dan performa akademik berdasarkan dataset CSV yang Anda upload.</p>
     <div class="mt-3 inline-block bg-gradient-to-r from-violet-100 to-purple-100 text-violet-700 px-4 py-2 rounded-lg text-sm font-medium">
-        📊 {{ number_format($dashboardData['total_rows_before_filter']) }} data mahasiswa dalam dataset
+        {{ number_format($dashboardData['total_rows_before_filter']) }} data mahasiswa dalam dataset
     </div>
 </div>
 
@@ -50,11 +50,11 @@
                 <form method="POST" action="{{ route('student-productivity.refresh') }}" class="inline">
                     @csrf
                     <button type="submit" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-md transition-colors text-sm font-medium">
-                        🔄 Segarkan Cache
+                        <i class="fas fa-rotate-right mr-1"></i>Segarkan Cache
                     </button>
                 </form>
                 <a href="{{ route('student-productivity.api', request()->query()) }}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-800 text-white rounded-md transition-colors text-sm font-medium">
-                    📡 JSON API
+                    <i class="fas fa-code mr-1"></i>JSON API
                 </a>
             </div>
         </div>
@@ -62,7 +62,7 @@
 </div>
 
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 mb-6 card-hover">
-    <h2 class="text-lg font-semibold text-gray-800 mb-4">🔍 Filter Data</h2>
+    <h2 class="text-lg font-semibold text-gray-800 mb-4"><i class="fas fa-filter mr-2 text-violet-600"></i>Filter Data</h2>
     <form method="GET" action="{{ route('student-productivity.dashboard') }}" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
         <div>
             <label for="academic_level" class="block text-sm font-medium text-gray-700 mb-2">Tingkat Akademik</label>
@@ -108,7 +108,7 @@
                 <p class="text-gray-600 text-sm font-medium">Total Mahasiswa</p>
                 <h3 class="text-4xl font-bold text-gray-800 mt-2">{{ number_format($stats['total_students']) }}</h3>
             </div>
-            <div class="text-4xl text-purple-300">👥</div>
+            <div class="text-4xl text-purple-300"><i class="fas fa-users"></i></div>
         </div>
     </div>
     <div class="stat-card card-hover rounded-xl shadow-md p-6">
@@ -117,7 +117,7 @@
                 <p class="text-gray-600 text-sm font-medium">Rata-rata Produktivitas</p>
                 <h3 class="text-4xl font-bold text-purple-600 mt-2">{{ $stats['avg_productivity'] }}</h3>
             </div>
-            <div class="text-4xl text-purple-300">⚡</div>
+            <div class="text-4xl text-purple-300"><i class="fas fa-bolt"></i></div>
         </div>
     </div>
     <div class="stat-card card-hover rounded-xl shadow-md p-6">
@@ -126,7 +126,7 @@
                 <p class="text-gray-600 text-sm font-medium">Rata-rata Nilai Ujian</p>
                 <h3 class="text-4xl font-bold text-emerald-600 mt-2">{{ $stats['avg_exam_score'] }}</h3>
             </div>
-            <div class="text-4xl text-emerald-300">📈</div>
+            <div class="text-4xl text-emerald-300"><i class="fas fa-chart-line"></i></div>
         </div>
     </div>
     <div class="stat-card card-hover rounded-xl shadow-md p-6">
@@ -135,7 +135,7 @@
                 <p class="text-gray-600 text-sm font-medium">Rata-rata Burnout</p>
                 <h3 class="text-4xl font-bold text-rose-600 mt-2">{{ $stats['avg_burnout'] }}</h3>
             </div>
-            <div class="text-4xl text-rose-300">🔥</div>
+            <div class="text-4xl text-rose-300"><i class="fas fa-fire"></i></div>
         </div>
     </div>
 </div>
@@ -143,7 +143,7 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            📊 Produktivitas vs Nilai per Tingkat Akademik
+            <i class="fas fa-chart-column mr-2 text-violet-600"></i>Produktivitas vs Nilai per Tingkat Akademik
         </h3>
         <div class="h-80">
             <canvas id="academicLevelChart"></canvas>
@@ -151,7 +151,7 @@
     </div>
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            👥 Distribusi Jenis Kelamin
+            <i class="fas fa-venus-mars mr-2 text-pink-500"></i>Distribusi Jenis Kelamin
         </h3>
         <div class="h-80">
             <canvas id="genderChart"></canvas>
@@ -162,7 +162,7 @@
 <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            📡 Kualitas Internet
+            <i class="fas fa-wifi mr-2 text-cyan-500"></i>Kualitas Internet
         </h3>
         <div class="h-80">
             <canvas id="internetQualityChart"></canvas>
@@ -170,7 +170,7 @@
     </div>
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            ⏰ Jam Belajar vs Performa
+            <i class="fas fa-clock mr-2 text-amber-500"></i>Jam Belajar vs Performa
         </h3>
         <div class="h-80">
             <canvas id="studyHoursChart"></canvas>
@@ -181,7 +181,7 @@
 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-6">
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover xl:col-span-2">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            📍 Jam Belajar vs Skor Produktivitas
+            <i class="fas fa-circle-dot mr-2 text-indigo-500"></i>Jam Belajar vs Skor Produktivitas
         </h3>
         <div class="h-96">
             <canvas id="scatterChart"></canvas>
@@ -190,7 +190,7 @@
     </div>
     <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">
-            💼 Efek Pekerjaan Part-time
+            <i class="fas fa-briefcase mr-2 text-slate-500"></i>Efek Pekerjaan Part-time
         </h3>
         <div class="space-y-4">
             @foreach($partTimeImpact as $label => $impact)
@@ -214,7 +214,7 @@
 
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover mb-6">
     <h3 class="text-lg font-semibold text-gray-800 mb-4">
-        🎯 Wawasan per Tingkat Akademik
+        <i class="fas fa-bullseye mr-2 text-yellow-500"></i>Wawasan per Tingkat Akademik
     </h3>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -242,7 +242,7 @@
 
 <div class="bg-white/70 backdrop-blur-md rounded-xl shadow-md border border-white p-6 card-hover">
     <h3 class="text-lg font-semibold text-gray-800 mb-3">
-        🔍 Preview Data
+        <i class="fas fa-table mr-2 text-sky-500"></i>Preview Data
     </h3>
     <p class="text-sm text-gray-600 mb-4">Menampilkan 8 baris pertama dari dataset yang dipilih.</p>
     <div class="overflow-x-auto">
